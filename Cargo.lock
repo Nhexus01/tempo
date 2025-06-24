@@ -8691,6 +8691,7 @@ dependencies = [
  "reth-cli-util",
  "reth-consensus",
  "reth-db",
+ "reth-engine-primitives",
  "reth-ethereum-engine-primitives",
  "reth-ethereum-forks",
  "reth-ethereum-primitives",

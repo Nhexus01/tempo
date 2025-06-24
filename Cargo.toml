@@ -37,6 +37,7 @@ reth-cli-commands = { git = "https://github.com/paradigmxyz/reth", branch = "mai
 reth-cli-util = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-cli-util" }
 reth-consensus = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-consensus" }
 reth-db = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-db" }
+reth-engine-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-engine-primitives" }
 reth-ethereum-engine-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-engine-primitives" }
 reth-ethereum-forks = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-forks" }
 reth-ethereum-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-primitives" }

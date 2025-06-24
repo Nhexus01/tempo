@@ -35,15 +35,18 @@ fn main() -> eyre::Result<()> {
         let address = Address::new([0; 20]);
 
         Cli::<MalachiteChainSpecParser, NoArgs>::parse().run(|builder, _: NoArgs| async move {
-            // Create the application state
-            let state = State::new(ctx.clone(), config, genesis.clone(), address);
-
-            // Launch the Reth node
-            let reth_node = RethNode::new(state.clone());
+            // Launch the Reth node first to get the engine handle
+            let reth_node = RethNode::new();
             let NodeHandle {
-                node: _,
+                node,
                 node_exit_future,
             } = builder.node(reth_node).launch().await?;
+
+            // Get the beacon engine handle
+            let app_handle = node.add_ons_handle.beacon_engine_handle.clone();
+
+            // Now create the application state with the engine handle
+            let state = State::new(ctx.clone(), config, genesis.clone(), address, app_handle);
 
             // Get the home directory
             let home_dir = PathBuf::from("./data"); // In production, use proper data dir
