@@ -952,8 +952,13 @@ pub fn reload_log_level(_height: Height, _round: Round) {
 
 /// Encode a value to its byte representation
 pub fn encode_value(value: &Value) -> Bytes {
-    // Serialize the block using bincode
-    match bincode::serialize(&value.block) {
+    use reth_primitives_traits::serde_bincode_compat::SerdeBincodeCompat;
+
+    // Convert block to its bincode-compatible representation
+    let block_repr = value.block.as_repr();
+
+    // Serialize the bincode-compatible representation
+    match bincode::serialize(&block_repr) {
         Ok(bytes) => Bytes::from(bytes),
         Err(e) => {
             tracing::error!("Failed to encode value: {}", e);
@@ -964,9 +969,15 @@ pub fn encode_value(value: &Value) -> Bytes {
 
 /// Decode a value from its byte representation
 pub fn decode_value(bytes: Bytes) -> Option<Value> {
-    // Deserialize the block using bincode
-    match bincode::deserialize::<reth_primitives::Block>(&bytes) {
-        Ok(block) => Some(Value::new(block)),
+    use reth_primitives_traits::serde_bincode_compat::{Block as BlockRepr, SerdeBincodeCompat};
+
+    // Deserialize the bincode-compatible representation
+    match bincode::deserialize::<BlockRepr<'_, _, _>>(&bytes) {
+        Ok(block_repr) => {
+            // Convert from bincode-compatible representation back to Block
+            let block = reth_primitives::Block::from_repr(block_repr);
+            Some(Value::new(block))
+        }
         Err(e) => {
             tracing::error!("Failed to decode value: {}", e);
             None

@@ -45,15 +45,15 @@ reth-db-api = { git = "https://github.com/paradigmxyz/reth", branch = "main", pa
 reth-engine-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-engine-primitives" }
 reth-ethereum-engine-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-engine-primitives" }
 reth-ethereum-forks = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-forks" }
-reth-ethereum-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-primitives" }
+reth-ethereum-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-ethereum-primitives", features = ["serde-bincode-compat"] }
 reth-execution-types = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-execution-types" }
 reth-node-builder = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-node-builder", features = ["test-utils"] }
 reth-node-core = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-node-core" }
 reth-node-ethereum = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-node-ethereum" }
 reth-payload-builder = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-payload-builder" }
 reth-payload-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-payload-primitives" }
-reth-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-primitives" }
-reth-primitives-traits = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-primitives-traits" }
+reth-primitives = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-primitives", features = ["serde-bincode-compat"] }
+reth-primitives-traits = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-primitives-traits", features = ["serde-bincode-compat"] }
 reth-provider = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-provider" }
 reth-rpc-builder = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-rpc-builder" }
 reth-rpc-eth-api = { git = "https://github.com/paradigmxyz/reth", branch = "main", package = "reth-rpc-eth-api" }
@@ -64,7 +64,7 @@ reth-trie-db = { git = "https://github.com/paradigmxyz/reth", branch = "main", p
 
 # Alloy dependencies
 alloy = { version = "1.0.12", default-features = false }
-alloy-consensus = "1.0.12"
+alloy-consensus = { version = "1.0.12", features = ["serde-bincode-compat"] }
 alloy-eips = { version = "1.0.12", features = ["serde"] }
 alloy-genesis = "1.0.12"
 alloy-primitives = "1.2.0"
