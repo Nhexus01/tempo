@@ -5,7 +5,7 @@ pub mod eth_ext;
 pub mod policy;
 pub mod token;
 
-use alloy_primitives::B256;
+use alloy_primitives::{Address, B256};
 use alloy_rpc_types_eth::{Log, ReceiptWithBloom};
 pub use amm::{TempoAmm, TempoAmmApiServer};
 pub use dex::{TempoDex, api::TempoDexApiServer};
@@ -17,7 +17,7 @@ use reth_primitives_traits::{Recovered, TransactionMeta, WithEncoded, transactio
 use reth_transaction_pool::PoolPooledTx;
 use std::sync::Arc;
 pub use tempo_alloy::rpc::TempoTransactionRequest;
-use tempo_chainspec::TempoChainSpec;
+use tempo_chainspec::{TempoChainSpec, hardfork::TempoHardfork};
 use tempo_evm::TempoStateAccess;
 pub use token::{TempoToken, TempoTokenApiServer};
 
@@ -244,14 +244,14 @@ impl<N: FullNodeTypes<Types = TempoNode>> Call for TempoEthApi<N> {
     fn caller_gas_allowance(
         &self,
         mut db: impl Database<Error: Into<EthApiError>>,
-        evm_env: &EvmEnvFor<Self::Evm>,
+        _evm_env: &EvmEnvFor<Self::Evm>,
         tx_env: &TxEnvFor<Self::Evm>,
     ) -> Result<u64, Self::Error> {
         let fee_payer = tx_env
             .fee_payer()
             .map_err(EVMError::<ProviderError, _>::from)?;
         let fee_token = db
-            .get_fee_token(tx_env, evm_env.block_env.beneficiary, fee_payer)
+            .get_fee_token(tx_env, Address::ZERO, fee_payer, TempoHardfork::default())
             .map_err(Into::into)?;
         let fee_token_balance = db
             .get_token_balance(fee_token, fee_payer)
